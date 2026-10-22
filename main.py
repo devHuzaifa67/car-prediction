@@ -2,8 +2,17 @@ from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 from schema import CarFeatures, PredictionResponse
 from model import predict_price, load_artifacts
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(title="Car Price Prediction API", version="1.0")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # later you can restrict to your streamlit domain
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.on_event("startup")
 def startup_event():
